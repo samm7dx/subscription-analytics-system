@@ -1,0 +1,23 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# MySQL / dumps
+*.sql.dump
+
+# Environment files
+.env
+
+# Temporary files
+*.tmp
+*.bak
+
+# WAMP specific (optional)
+wamp64/
