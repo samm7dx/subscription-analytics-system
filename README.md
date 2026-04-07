@@ -1,121 +1,166 @@
-# Subscription Analytics System
+# 📊 Subscription Analytics System (Full Stack)
 
 ## 📌 Project Overview
-The Subscription Analytics System is a database-driven project designed to analyze user behavior, revenue generation, and engagement patterns in a subscription-based platform (such as OTT services).
 
-This project demonstrates how structured data can be stored, managed, and analyzed using SQL to generate meaningful business insights.
+The Subscription Analytics System is a **full-stack analytics dashboard** that analyzes user behavior, revenue, and engagement patterns for a subscription-based platform (like OTT services).
+
+It combines:
+
+* **MySQL database**
+* **Express.js backend APIs**
+* **React frontend dashboard with charts**
 
 ---
 
 ## 🎯 Objectives
-- Design a relational database for subscription platforms
-- Track user activity and engagement
-- Analyze revenue and subscription trends
-- Perform analytics such as DAU, churn, and content popularity
+
+* Design a scalable relational database
+* Build APIs to fetch analytics data
+* Visualize insights using interactive charts
+* Simulate real-world analytics system
 
 ---
 
 ## 🏗️ System Architecture
 
-The system is divided into three core modules:
-
-1. **Database Schema (`schema.sql`)**
-   - Defines table structure and relationships
-
-2. **Sample Data (`sample_data.sql`)**
-   - Simulates real-world user activity and subscriptions
-
-3. **Analytics Queries (`queries.sql`)**
-   - Extracts insights from the dataset
+```
+MySQL Database
+      ↓
+Express.js Backend (API Layer)
+      ↓
+React Frontend (Dashboard + Charts)
+```
 
 ---
 
 ## 🗂️ Database Tables
 
-| Table Name    |      Description               |
-|---------------|--------------------------------|
-| Users         | Stores user details            |
-| Plans         | Subscription plans and pricing |
-| Subscriptions | Tracks user subscriptions      |
-| Content       | Stores available content       |
-| WatchHistory  | Tracks user viewing activity   |
-| UserLogs      | Records user actions           |
+| Table Name    | Description        |
+| ------------- | ------------------ |
+| Users         | User details       |
+| Plans         | Subscription plans |
+| Subscriptions | User subscriptions |
+| Content       | Content catalog    |
+| WatchHistory  | Viewing activity   |
+| UserLogs      | User actions/logs  |
 
 ---
 
-## 🧩 Entity Relationship (ER) Design
+## 🧠 Features
 
-- A **User** can have multiple **Subscriptions**
-- A **Plan** can be used by multiple users
-- A **User** can watch multiple **Content items**
-- **WatchHistory** connects Users and Content
-- **UserLogs** track user activities
+### 🔹 Backend (Node.js + Express)
 
-This design ensures normalization and avoids redundancy.
+* REST APIs for analytics
+* Dynamic query execution
+* MySQL integration using mysql2
 
----
+### 🔹 Frontend (React + Chart.js)
 
-## 🧠 Database Design Concepts Used
+* KPI dashboard
+* Interactive charts
+* Query-based analytics visualization
 
-- Normalization (up to 3NF)
-- Primary Key & Foreign Key constraints
-- Data integrity enforcement
-- Use of ENUM for subscription status
-- Indexing for performance optimization
+### 🔹 Analytics Supported
+
+* Daily Active Users (DAU)
+* Revenue analysis
+* Top content
+* Churn analysis
+* Genre engagement
 
 ---
 
 ## ⚙️ Technologies Used
 
-- MySQL (WAMP Server)
-- phpMyAdmin
-- Git & GitHub
-- SQL
+* MySQL
+* Node.js + Express
+* React (Vite)
+* Chart.js
+* Git & GitHub
 
 ---
 
 ## 📊 Key Features
 
-- Daily Active Users (DAU) tracking  
-- Revenue analysis  
-- Top content identification  
-- Churn detection  
-- User engagement metrics  
-- Monthly revenue trends  
-
----
-
-## 📊 Sample Analytics Queries
-
-- **DAU (Daily Active Users):**
-  Counts unique users active per day
-
-- **Revenue Calculation:**
-  Computes revenue from active subscriptions
-
-- **Churn Analysis:**
-  Identifies users with cancelled or expired subscriptions
-
-- **Top Content:**
-  Finds most watched content
-
-- **Engagement Metrics:**
-  Calculates average watch time per user
+* 📈 Real-time analytics dashboard
+* 📊 Interactive charts
+* 🔍 Query-based insights (buttons trigger SQL queries)
+* 🧾 Data visualization + tables
+* ⚡ Full-stack integration
 
 ---
 
 ## 🔄 Workflow
 
-1. Create database schema (`schema.sql`)
-2. Insert sample data (`sample_data.sql`)
-3. Execute analytics queries (`queries.sql`)
+1. Create database (`schema.sql`)
+2. Insert data (`sample_data.sql`)
+3. Start backend server
+4. Run frontend dashboard
+5. View analytics in browser
 
 ---
 
 ## 🚀 How to Run
 
-1. Start WAMP Server  
-2. Open phpMyAdmin  
-3. Create database:
-   ```sql
-   CREATE DATABASE subscription_analytics;
+### 1️⃣ Setup Database
+
+```sql
+CREATE DATABASE subscription_analytics;
+USE subscription_analytics;
+SOURCE database/schema.sql;
+SOURCE database/sample_data.sql;
+```
+
+---
+
+### 2️⃣ Start Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+---
+
+### 3️⃣ Start Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+### 4️⃣ Open Dashboard
+
+```
+http://localhost:5173
+```
+
+---
+
+## 📌 Future Improvements
+
+* Authentication (JWT)
+* Advanced filters (date range, genre)
+* Export data (CSV/PDF)
+* Deployment (Vercel + Render)
+* Real-time updates
+
+---
+
+## 💡 Learning Outcomes
+
+* Full-stack development (DB + API + UI)
+* SQL analytics and optimization
+* REST API design
+* Data visualization
+* Debugging real-world issues
+
+---
+
+## ⭐ Author
+
+**Samridh Raj**
