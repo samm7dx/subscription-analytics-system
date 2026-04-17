@@ -8,7 +8,9 @@ dotenv.config();
 const app = express();   // ✅ app defined HERE
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://your-frontend.vercel.app"]
+}));
 app.use(express.json());
 
 /* ---------------- EXISTING ROUTES ---------------- */
