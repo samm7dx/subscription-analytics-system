@@ -102,7 +102,25 @@ React Frontend (Dashboard + Charts)
 
 ## 🚀 How to Run
 
-### 1️⃣ Setup Database
+### 1️⃣ Setup Database (recommended: Docker)
+
+Start MySQL in Docker:
+
+```bash
+docker compose up -d
+```
+
+Then load/reset demo data (this generates realistic random numbers each time because the SQL uses `RAND()`):
+
+```bash
+cd backend
+copy .env.example .env
+# edit DB_PASSWORD if needed (default in compose is root)
+npm install
+npm run db:reset-demo
+```
+
+### 1️⃣ Setup Database (manual)
 
 ```sql
 CREATE DATABASE subscription_analytics;
@@ -117,6 +135,8 @@ SOURCE database/sample_data.sql;
 
 ```bash
 cd backend
+copy .env.example .env
+# edit DB_HOST/DB_USER/DB_PASSWORD/DB_NAME if needed
 npm install
 npm run dev
 ```
@@ -127,6 +147,7 @@ npm run dev
 
 ```bash
 cd frontend
+copy .env.example .env
 npm install
 npm run dev
 ```

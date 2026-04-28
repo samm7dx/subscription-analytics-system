@@ -4,6 +4,7 @@ export default function DataStream({ data }) {
   const [visible, setVisible] = useState([]);
 
   useEffect(() => {
+    setVisible([]);
     if (!data || data.length === 0) return;
 
     let i = 0;
