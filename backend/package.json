@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "db:reset-demo": "node scripts/resetDemoDb.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
