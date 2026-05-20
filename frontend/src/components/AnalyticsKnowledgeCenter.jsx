@@ -17,7 +17,7 @@ const AnalyticsKnowledgeCenter = () => {
       id="knowledge"
       className="scroll-mt-28 border-y border-white/[0.04] bg-[#06060a]/80 py-14 md:py-20"
     >
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+      <div className="page-container">
         <SectionTitle
           align="center"
           eyebrow={PROJECT_SUBTITLE}
@@ -25,12 +25,12 @@ const AnalyticsKnowledgeCenter = () => {
           description="Definitions, schema mapping, and SQL logic for each analytics query used in this dashboard."
         />
 
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto w-full max-w-3xl min-w-0">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mb-8 flex flex-wrap items-center justify-center gap-3 text-center"
+            className="mb-6 flex flex-wrap items-center justify-center gap-2 sm:mb-8 sm:gap-3"
           >
             <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-gray-500">
               {analyticsKnowledge.length} metrics documented
@@ -40,7 +40,7 @@ const AnalyticsKnowledgeCenter = () => {
             </span>
           </motion.div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 sm:gap-4">
             {analyticsKnowledge.map((metric, index) => (
               <motion.div
                 key={metric.key}
@@ -48,6 +48,7 @@ const AnalyticsKnowledgeCenter = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.4, delay: index * 0.04 }}
+                className="min-w-0"
               >
                 <AnalyticsKnowledgeCard
                   metric={metric}

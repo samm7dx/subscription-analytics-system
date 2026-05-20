@@ -54,20 +54,20 @@ const Navbar = () => {
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 md:h-[4.5rem] md:px-8">
+      <nav className="page-container flex h-14 min-h-14 items-center justify-between gap-3 sm:h-16 md:gap-4">
         <a
           href="#top"
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="flex min-w-0 shrink items-center gap-2.5"
+          className="flex min-w-0 max-w-[45%] shrink-0 items-center gap-2 sm:max-w-none sm:gap-2.5"
         >
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-600 text-sm font-bold text-white">
             S
           </span>
-          <span className="hidden min-w-0 flex-col sm:flex">
-            <span className="truncate text-sm font-semibold tracking-tight text-white">
+          <span className="hidden min-w-0 flex-col leading-tight md:flex">
+            <span className="truncate text-sm font-semibold text-white">
               {PROJECT_NAME}
             </span>
             <span className="text-[10px] uppercase tracking-wider text-gray-500">
@@ -76,13 +76,13 @@ const Navbar = () => {
           </span>
         </a>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden shrink-0 items-center gap-0.5 lg:flex">
           {navLinks.map((link) => (
             <button
               key={link.href}
               type="button"
               onClick={() => scrollTo(link.href)}
-              className={`rounded-lg px-3.5 py-2 text-sm transition ${
+              className={`whitespace-nowrap rounded-lg px-3 py-2 text-sm transition ${
                 activeSection === link.href
                   ? "bg-white/[0.06] font-medium text-white"
                   : "text-gray-400 hover:text-white"
@@ -94,7 +94,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => scrollTo("#analytics")}
-            className="ml-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-500"
+            className="ml-1.5 whitespace-nowrap rounded-lg bg-red-600 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-red-500"
           >
             View Charts
           </button>
@@ -102,7 +102,7 @@ const Navbar = () => {
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-300 md:hidden"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-gray-300 lg:hidden"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
         >
@@ -124,9 +124,9 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-b border-white/[0.06] bg-[#050508]/95 backdrop-blur-xl md:hidden"
+            className="overflow-hidden border-b border-white/[0.06] bg-[#050508]/95 backdrop-blur-xl lg:hidden"
           >
-            <div className="flex flex-col gap-1 px-5 py-4">
+            <div className="page-container flex flex-col gap-1 py-3">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
@@ -144,7 +144,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={() => scrollTo("#analytics")}
-                className="mt-2 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white"
+                className="mt-1 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white"
               >
                 View Charts
               </button>

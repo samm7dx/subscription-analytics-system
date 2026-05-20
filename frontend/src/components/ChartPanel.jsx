@@ -69,7 +69,7 @@ const ChartPanel = ({ chartType, data, title }) => {
       return (
         <ChartWrapper height={300} ariaLabel="Daily active users line chart">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 4 }}>
+            <LineChart data={chartData} margin={{ top: 12, right: 16, left: 4, bottom: 8 }}>
               <CartesianGrid stroke={gridStroke} vertical={false} />
               <XAxis
                 dataKey="label"
@@ -111,7 +111,7 @@ const ChartPanel = ({ chartType, data, title }) => {
       return (
         <ChartWrapper height={300} ariaLabel="Monthly revenue area chart">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 4 }}>
+            <AreaChart data={chartData} margin={{ top: 12, right: 16, left: 8, bottom: 8 }}>
               <defs>
                 <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor={CHART_COLORS[0]} stopOpacity={0.35} />
@@ -166,15 +166,15 @@ const ChartPanel = ({ chartType, data, title }) => {
       const name = isEngagement ? "Avg Watch Time (min)" : "Views";
 
       return (
-        <ChartWrapper height={isEngagement ? 360 : 300} ariaLabel="Bar chart">
+        <ChartWrapper height={isEngagement ? 380 : 320} ariaLabel="Bar chart">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={chartData}
               layout={isEngagement ? "vertical" : "horizontal"}
               margin={
                 isEngagement
-                  ? { top: 4, right: 16, left: 4, bottom: 4 }
-                  : { top: 8, right: 12, left: 0, bottom: 48 }
+                  ? { top: 8, right: 20, left: 8, bottom: 8 }
+                  : { top: 12, right: 16, left: 4, bottom: 56 }
               }
             >
               <CartesianGrid stroke={gridStroke} horizontal={!isEngagement} vertical={isEngagement} />
@@ -187,7 +187,8 @@ const ChartPanel = ({ chartType, data, title }) => {
                     tick={axisTick}
                     tickLine={false}
                     axisLine={false}
-                    width={88}
+                    width={72}
+                    tickFormatter={(v) => truncateLabel(v, 12)}
                   />
                   <Tooltip content={<CustomTooltip formatter={(v) => formatDuration(v)} />} />
                   <Bar dataKey={dataKey} name={name} fill={CHART_COLORS[0]} radius={[0, 6, 6, 0]} maxBarSize={14} />
@@ -199,10 +200,11 @@ const ChartPanel = ({ chartType, data, title }) => {
                     tick={axisTick}
                     tickLine={false}
                     axisLine={false}
-                    angle={-35}
+                    angle={-30}
                     textAnchor="end"
-                    height={56}
+                    height={60}
                     interval={0}
+                    tickMargin={8}
                   />
                   <YAxis tick={axisTick} tickLine={false} axisLine={false} width={42} />
                   <Tooltip content={<CustomTooltip formatter={(v) => formatNumber(v)} />} />
@@ -225,15 +227,15 @@ const ChartPanel = ({ chartType, data, title }) => {
       }));
 
       return (
-        <ChartWrapper height={300} ariaLabel={isDoughnut ? "Genre doughnut chart" : "Churn pie chart"}>
+        <ChartWrapper height={isDoughnut ? 340 : 320} ariaLabel={isDoughnut ? "Genre doughnut chart" : "Churn pie chart"}>
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
+            <PieChart margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
               <Pie
                 data={chartData}
                 cx="50%"
-                cy="50%"
-                innerRadius={isDoughnut ? 68 : 0}
-                outerRadius={isDoughnut ? 100 : 105}
+                cy="45%"
+                innerRadius={isDoughnut ? 60 : 0}
+                outerRadius={isDoughnut ? 88 : 92}
                 paddingAngle={isDoughnut ? 3 : 2}
                 dataKey="value"
                 nameKey="name"

@@ -18,24 +18,27 @@ const QueryViewer = ({ query, id }) => {
   };
 
   return (
-    <div id={id} className="min-w-0 scroll-mt-32 rounded-2xl transition-[box-shadow] duration-300">
-      <div className="mb-3 flex items-center justify-between gap-4">
-        <h3 className="text-sm font-semibold text-gray-300">SQL Query</h3>
+    <div
+      id={id}
+      className="min-w-0 scroll-mt-32 rounded-xl transition-[box-shadow] duration-300 sm:rounded-2xl"
+    >
+      <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <h3 className="shrink-0 text-sm font-semibold text-gray-300">SQL Query</h3>
         <button
           type="button"
           onClick={handleCopy}
-          className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-gray-300 transition hover:border-red-500/30 hover:bg-red-500/10 hover:text-white"
+          className="inline-flex w-fit items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-gray-300 transition hover:border-red-500/30 hover:bg-red-500/10 hover:text-white"
         >
           {copied ? (
             <>
-              <svg className="h-3.5 w-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-3.5 w-3.5 shrink-0 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               Copied
             </>
           ) : (
             <>
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -49,19 +52,23 @@ const QueryViewer = ({ query, id }) => {
         </button>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-white/[0.06]">
+      <div className="card-inner overflow-x-auto rounded-xl border border-white/[0.06]">
         <SyntaxHighlighter
           language="sql"
           style={vscDarkPlus}
           customStyle={{
             margin: 0,
             borderRadius: "12px",
-            padding: "20px",
+            padding: "16px",
             background: "#08080c",
-            fontSize: "13px",
-            lineHeight: 1.6,
+            fontSize: "12px",
+            lineHeight: 1.65,
+            minWidth: "min(100%, 280px)",
           }}
           wrapLongLines
+          codeTagProps={{
+            style: { whiteSpace: "pre-wrap", wordBreak: "break-word" },
+          }}
         >
           {query?.trim() || "-- No query available"}
         </SyntaxHighlighter>

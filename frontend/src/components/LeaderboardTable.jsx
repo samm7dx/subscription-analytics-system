@@ -7,13 +7,13 @@ const LeaderboardTable = ({ data, nameKey = "name", valueKey = "activity_count" 
   const maxValue = Math.max(...data.map((row) => Number(row[valueKey]) || 0));
 
   return (
-    <div className="overflow-hidden rounded-xl border border-white/[0.06]">
-      <table className="w-full text-left text-sm">
+    <div className="card-inner -mx-1 overflow-x-auto rounded-xl border border-white/[0.06] sm:mx-0">
+      <table className="w-full min-w-[280px] text-left text-sm">
         <thead>
           <tr className="border-b border-white/[0.06] bg-white/[0.02] text-xs uppercase tracking-wider text-gray-500">
-            <th className="px-4 py-3 font-medium">Rank</th>
-            <th className="px-4 py-3 font-medium">User</th>
-            <th className="px-4 py-3 text-right font-medium">Activity</th>
+            <th className="whitespace-nowrap px-3 py-3 font-medium sm:px-4">Rank</th>
+            <th className="px-3 py-3 font-medium sm:px-4">User</th>
+            <th className="whitespace-nowrap px-3 py-3 text-right font-medium sm:px-4">Activity</th>
           </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@ const LeaderboardTable = ({ data, nameKey = "name", valueKey = "activity_count" 
                 transition={{ delay: index * 0.04 }}
                 className="border-b border-white/[0.04] transition-colors hover:bg-white/[0.03]"
               >
-                <td className="px-4 py-3.5">
+                <td className="whitespace-nowrap px-3 py-3 sm:px-4 sm:py-3.5">
                   <span
                     className={`inline-flex h-7 w-7 items-center justify-center rounded-lg text-xs font-semibold ${
                       index === 0
@@ -40,16 +40,18 @@ const LeaderboardTable = ({ data, nameKey = "name", valueKey = "activity_count" 
                     {index + 1}
                   </span>
                 </td>
-                <td className="px-4 py-3.5">
-                  <div className="font-medium text-white">{row[nameKey]}</div>
-                  <div className="mt-1.5 h-1 w-full max-w-[180px] overflow-hidden rounded-full bg-white/[0.06]">
+                <td className="min-w-0 px-3 py-3 sm:px-4 sm:py-3.5">
+                  <div className="truncate font-medium text-white sm:max-w-[200px]">
+                    {row[nameKey]}
+                  </div>
+                  <div className="mt-1.5 h-1 w-full max-w-[160px] overflow-hidden rounded-full bg-white/[0.06] sm:max-w-[180px]">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-red-600 to-red-400"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
                 </td>
-                <td className="px-4 py-3.5 text-right font-semibold tabular-nums text-gray-200">
+                <td className="whitespace-nowrap px-3 py-3 text-right font-semibold tabular-nums text-gray-200 sm:px-4 sm:py-3.5">
                   {formatNumber(value)}
                 </td>
               </motion.tr>
