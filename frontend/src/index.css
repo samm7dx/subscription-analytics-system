@@ -55,7 +55,6 @@ body {
   background: #3f3f48;
 }
 
-/* Layout utilities — consistent spacing across sections */
 @layer components {
   .page-container {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
@@ -66,12 +65,17 @@ body {
   }
 
   .card-inner {
-    @apply min-w-0 max-w-full overflow-hidden;
+    @apply min-w-0 max-w-full;
+  }
+
+  .chart-panel {
+    @apply isolate w-full min-w-0;
   }
 }
 
-/* Recharts — prevent overflow and label clipping */
+/* Recharts — visible strokes and labels on dark background */
 .recharts-wrapper {
+  width: 100% !important;
   max-width: 100% !important;
 }
 
@@ -79,18 +83,36 @@ body {
   overflow: visible;
 }
 
-.recharts-default-legend {
-  padding-top: 16px !important;
-  margin-bottom: 4px !important;
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #9ca3af !important;
+  font-size: 11px !important;
+}
+
+.recharts-cartesian-axis-line {
+  stroke: rgba(255, 255, 255, 0.12) !important;
 }
 
 .recharts-legend-item-text {
   color: #9ca3af !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
 }
 
-.recharts-cartesian-axis-tick-value {
-  font-size: 10px;
+.recharts-default-legend {
+  padding-top: 8px !important;
+}
+
+.recharts-tooltip-wrapper {
+  z-index: 20;
+  outline: none;
+}
+
+.recharts-active-dot {
+  filter: drop-shadow(0 0 4px rgba(229, 9, 20, 0.6));
 }
 
 .section-highlight {
