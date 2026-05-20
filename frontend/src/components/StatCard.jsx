@@ -1,44 +1,32 @@
 import { motion } from "framer-motion";
 import AnimatedCounter from "./AnimatedCounter";
 
-const StatCard = ({
-  label,
-  value,
-  subtext,
-  icon,
-  delay = 0,
-  formatValue,
-}) => {
+const StatCard = ({ label, value, subtext, icon, delay = 0, formatValue }) => {
   const formatter =
     formatValue || ((v) => Math.round(v).toLocaleString());
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.45, delay }}
-      className="group relative min-w-0 overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-4 backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-red-500/25 hover:shadow-[0_8px_32px_rgba(229,9,20,0.08)] sm:p-5 md:p-6"
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay }}
+      className="flex min-w-0 flex-col justify-between rounded-2xl border border-white/[0.07] bg-[#0c0c10]/70 p-5 shadow-md shadow-black/25 sm:p-6"
     >
-      <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-red-500/[0.07] blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      <div className="relative flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="break-words text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-500">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-500">
             {label}
           </p>
-          <p className="mt-2 text-xl font-bold tabular-nums leading-tight tracking-tight text-white sm:mt-2.5 sm:text-2xl md:text-[1.75rem]">
+          <p className="mt-3 text-2xl font-bold tabular-nums leading-none text-white sm:text-3xl">
             <AnimatedCounter value={value} formatter={formatter} />
           </p>
           {subtext && (
-            <p className="mt-1.5 break-words text-xs leading-snug text-gray-500 sm:mt-2">
-              {subtext}
-            </p>
+            <p className="mt-2 text-xs leading-snug text-gray-500">{subtext}</p>
           )}
         </div>
-
         {icon && (
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-red-500/15 bg-red-500/10 text-red-500 sm:h-11 sm:w-11">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-red-500/20 bg-red-500/10 text-red-500 sm:h-11 sm:w-11">
             {icon}
           </div>
         )}

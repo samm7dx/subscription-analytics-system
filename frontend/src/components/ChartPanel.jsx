@@ -1,3 +1,4 @@
+import { useId } from "react";
 import {
   LineChart,
   Line,
@@ -29,16 +30,31 @@ import {
   formatDuration,
   truncateLabel,
 } from "../utils/formatters";
-import { CHART_COLORS, tooltipStyle, axisTick, gridStroke } from "../utils/chartTheme";
+import {
+  CHART_COLORS,
+  PRIMARY_STROKE,
+  PRIMARY_FILL,
+  tooltipStyle,
+  axisTick,
+  axisLine,
+  gridStroke,
+  chartMargins,
+  legendStyle,
+} from "../utils/chartTheme";
 
 const CustomTooltip = ({ active, payload, label, formatter }) => {
   if (!active || !payload?.length) return null;
 
   return (
     <div style={tooltipStyle}>
-      {label && <p className="mb-1.5 text-xs text-gray-400">{label}</p>}
+      {label != null && label !== "" && (
+        <p style={{ marginBottom: 6, fontSize: 11, color: "#9ca3af" }}>{label}</p>
+      )}
       {payload.map((entry) => (
-        <p key={entry.dataKey} className="text-sm font-medium" style={{ color: entry.color }}>
+        <p
+          key={`${entry.dataKey}-${entry.name}`}
+          style={{ fontSize: 13, fontWeight: 500, color: entry.color || "#f3f4f6" }}
+        >
           {entry.name}: {formatter ? formatter(entry.value, entry.name) : entry.value}
         </p>
       ))}
@@ -47,8 +63,15 @@ const CustomTooltip = ({ active, payload, label, formatter }) => {
 };
 
 const ChartPanel = ({ chartType, data, title }) => {
+  const gradientId = useId().replace(/:/g, "");
+
   if (!data?.length && chartType !== "kpi") {
-    return <EmptyState title="No chart data" message={`${title || "This metric"} has no rows to visualize.`} />;
+    return (
+      <EmptyState
+        title="No chart data"
+        message={`${title || "This metric"} has no rows to visualize.`}
+      />
+    );
   }
 
   switch (chartType) {
@@ -68,33 +91,35 @@ const ChartPanel = ({ chartType, data, title }) => {
 
       return (
         <ChartWrapper height={300} ariaLabel="Daily active users line chart">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ top: 12, right: 16, left: 4, bottom: 8 }}>
-              <CartesianGrid stroke={gridStroke} vertical={false} />
+          <ResponsiveContainer width="100%" height="100%" minHeight={280}>
+            <LineChart data={chartData} margin={chartMargins.line}>
+              <CartesianGrid stroke={gridStroke} strokeOpacity={1} vertical={false} />
               <XAxis
                 dataKey="label"
                 tick={axisTick}
+                axisLine={axisLine}
                 tickLine={false}
-                axisLine={false}
                 interval="preserveStartEnd"
-                minTickGap={28}
+                minTickGap={24}
               />
-              <YAxis tick={axisTick} tickLine={false} axisLine={false} width={42} />
-              <Tooltip
-                content={
-                  <CustomTooltip
-                    formatter={(v) => formatNumber(v)}
-                  />
-                }
+              <YAxis
+                tick={axisTick}
+                axisLine={axisLine}
+                tickLine={false}
+                width={48}
+                allowDecimals={false}
               />
+              <Tooltip content={<CustomTooltip formatter={(v) => formatNumber(v)} />} />
               <Line
                 type="monotone"
                 dataKey="total_active_users"
                 name="Active Users"
-                stroke={CHART_COLORS[0]}
-                strokeWidth={2.5}
-                dot={false}
-                activeDot={{ r: 5, fill: CHART_COLORS[0], stroke: "#fff", strokeWidth: 2 }}
+                stroke={PRIMARY_STROKE}
+                strokeWidth={3}
+                fill="none"
+                dot={{ r: 3, fill: PRIMARY_STROKE, strokeWidth: 0 }}
+                activeDot={{ r: 6, fill: PRIMARY_STROKE, stroke: "#fff", strokeWidth: 2 }}
+                isAnimationActive={false}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -110,30 +135,28 @@ const ChartPanel = ({ chartType, data, title }) => {
 
       return (
         <ChartWrapper height={300} ariaLabel="Monthly revenue area chart">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 12, right: 16, left: 8, bottom: 8 }}>
+          <ResponsiveContainer width="100%" height="100%" minHeight={280}>
+            <AreaChart data={chartData} margin={chartMargins.area}>
               <defs>
-                <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={CHART_COLORS[0]} stopOpacity={0.35} />
-                  <stop offset="100%" stopColor={CHART_COLORS[0]} stopOpacity={0} />
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={PRIMARY_FILL} stopOpacity={0.4} />
+                  <stop offset="100%" stopColor={PRIMARY_FILL} stopOpacity={0.05} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke={gridStroke} vertical={false} />
-              <XAxis dataKey="label" tick={axisTick} tickLine={false} axisLine={false} />
+              <CartesianGrid stroke={gridStroke} strokeOpacity={1} vertical={false} />
+              <XAxis dataKey="label" tick={axisTick} axisLine={axisLine} tickLine={false} />
               <YAxis
                 tick={axisTick}
+                axisLine={axisLine}
                 tickLine={false}
-                axisLine={false}
-                width={52}
+                width={56}
                 tickFormatter={(v) => formatCurrency(v)}
               />
               <Tooltip
                 content={
                   <CustomTooltip
                     formatter={(v, name) =>
-                      name === "Monthly Revenue"
-                        ? formatCurrency(v)
-                        : formatNumber(v)
+                      name === "Monthly Revenue" ? formatCurrency(v) : formatNumber(v)
                     }
                   />
                 }
@@ -142,9 +165,10 @@ const ChartPanel = ({ chartType, data, title }) => {
                 type="monotone"
                 dataKey="monthly_revenue"
                 name="Monthly Revenue"
-                stroke={CHART_COLORS[0]}
-                fill="url(#revenueGradient)"
-                strokeWidth={2}
+                stroke={PRIMARY_STROKE}
+                fill={`url(#${gradientId})`}
+                strokeWidth={2.5}
+                isAnimationActive={false}
               />
             </AreaChart>
           </ResponsiveContainer>
@@ -157,58 +181,83 @@ const ChartPanel = ({ chartType, data, title }) => {
       const chartData = data.map((item) => ({
         ...item,
         label: truncateLabel(item.title || item.name, 14),
-        metric: isEngagement
-          ? Number(item.average_watch_time) || 0
-          : Number(item.total_views) || 0,
+        metric: Number(item.average_watch_time) || 0,
       }));
 
-      const dataKey = isEngagement ? "metric" : "total_views";
-      const name = isEngagement ? "Avg Watch Time (min)" : "Views";
-
       return (
-        <ChartWrapper height={isEngagement ? 380 : 320} ariaLabel="Bar chart">
-          <ResponsiveContainer width="100%" height="100%">
+        <ChartWrapper height={isEngagement ? 400 : 340} ariaLabel="Bar chart">
+          <ResponsiveContainer width="100%" height="100%" minHeight={isEngagement ? 360 : 300}>
             <BarChart
               data={chartData}
               layout={isEngagement ? "vertical" : "horizontal"}
-              margin={
-                isEngagement
-                  ? { top: 8, right: 20, left: 8, bottom: 8 }
-                  : { top: 12, right: 16, left: 4, bottom: 56 }
-              }
+              margin={isEngagement ? chartMargins.barVertical : chartMargins.barHorizontal}
             >
-              <CartesianGrid stroke={gridStroke} horizontal={!isEngagement} vertical={isEngagement} />
+              <CartesianGrid
+                stroke={gridStroke}
+                strokeOpacity={1}
+                horizontal={!isEngagement}
+                vertical={isEngagement}
+              />
               {isEngagement ? (
                 <>
-                  <XAxis type="number" tick={axisTick} tickLine={false} axisLine={false} tickFormatter={(v) => formatDuration(v)} />
+                  <XAxis
+                    type="number"
+                    tick={axisTick}
+                    axisLine={axisLine}
+                    tickLine={false}
+                    tickFormatter={(v) => formatDuration(v)}
+                  />
                   <YAxis
                     type="category"
                     dataKey="label"
                     tick={axisTick}
+                    axisLine={axisLine}
                     tickLine={false}
-                    axisLine={false}
-                    width={72}
-                    tickFormatter={(v) => truncateLabel(v, 12)}
+                    width={80}
                   />
                   <Tooltip content={<CustomTooltip formatter={(v) => formatDuration(v)} />} />
-                  <Bar dataKey={dataKey} name={name} fill={CHART_COLORS[0]} radius={[0, 6, 6, 0]} maxBarSize={14} />
+                  <Bar
+                    dataKey="metric"
+                    name="Avg Watch Time"
+                    fill={PRIMARY_FILL}
+                    stroke={PRIMARY_STROKE}
+                    strokeWidth={1}
+                    radius={[0, 4, 4, 0]}
+                    maxBarSize={16}
+                    isAnimationActive={false}
+                  />
                 </>
               ) : (
                 <>
                   <XAxis
                     dataKey="label"
                     tick={axisTick}
+                    axisLine={axisLine}
                     tickLine={false}
-                    axisLine={false}
-                    angle={-30}
+                    angle={-28}
                     textAnchor="end"
-                    height={60}
+                    height={64}
                     interval={0}
-                    tickMargin={8}
+                    tickMargin={10}
                   />
-                  <YAxis tick={axisTick} tickLine={false} axisLine={false} width={42} />
+                  <YAxis
+                    tick={axisTick}
+                    axisLine={axisLine}
+                    tickLine={false}
+                    width={48}
+                    allowDecimals={false}
+                  />
                   <Tooltip content={<CustomTooltip formatter={(v) => formatNumber(v)} />} />
-                  <Bar dataKey="total_views" name="Views" fill={CHART_COLORS[0]} radius={[6, 6, 0, 0]} maxBarSize={36} />
+                  <Bar
+                    dataKey="total_views"
+                    name="Views"
+                    fill={PRIMARY_FILL}
+                    stroke={PRIMARY_STROKE}
+                    strokeWidth={1}
+                    radius={[4, 4, 0, 0]}
+                    maxBarSize={40}
+                    isAnimationActive={false}
+                  />
                 </>
               )}
             </BarChart>
@@ -227,30 +276,33 @@ const ChartPanel = ({ chartType, data, title }) => {
       }));
 
       return (
-        <ChartWrapper height={isDoughnut ? 340 : 320} ariaLabel={isDoughnut ? "Genre doughnut chart" : "Churn pie chart"}>
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
+        <ChartWrapper height={360} ariaLabel={isDoughnut ? "Genre doughnut chart" : "Churn pie chart"}>
+          <ResponsiveContainer width="100%" height="100%" minHeight={320}>
+            <PieChart margin={chartMargins.pie}>
               <Pie
                 data={chartData}
                 cx="50%"
-                cy="45%"
-                innerRadius={isDoughnut ? 60 : 0}
-                outerRadius={isDoughnut ? 88 : 92}
-                paddingAngle={isDoughnut ? 3 : 2}
+                cy="42%"
+                innerRadius={isDoughnut ? 58 : 0}
+                outerRadius={isDoughnut ? 86 : 90}
+                paddingAngle={isDoughnut ? 2 : 1}
                 dataKey="value"
                 nameKey="name"
+                stroke="#0f0f14"
+                strokeWidth={2}
+                isAnimationActive={false}
               >
                 {chartData.map((entry) => (
-                  <Cell key={entry.name} fill={entry.fill} stroke="transparent" />
+                  <Cell key={entry.name} fill={entry.fill} />
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip formatter={(v) => formatNumber(v)} />} />
               <Legend
                 verticalAlign="bottom"
+                align="center"
                 iconType="circle"
-                formatter={(value) => (
-                  <span className="text-xs text-gray-400">{value}</span>
-                )}
+                iconSize={8}
+                wrapperStyle={legendStyle.wrapperStyle}
               />
             </PieChart>
           </ResponsiveContainer>

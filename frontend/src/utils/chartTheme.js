@@ -9,19 +9,42 @@ export const CHART_COLORS = [
   "#ec4899",
 ];
 
+export const PRIMARY_STROKE = "#e50914";
+export const PRIMARY_FILL = "#e50914";
+
 export const tooltipStyle = {
-  backgroundColor: "rgba(12, 12, 16, 0.95)",
-  border: "1px solid rgba(255, 255, 255, 0.08)",
-  borderRadius: "12px",
+  backgroundColor: "rgba(14, 14, 18, 0.96)",
+  border: "1px solid rgba(255, 255, 255, 0.12)",
+  borderRadius: "10px",
   padding: "10px 14px",
-  boxShadow: "0 12px 40px rgba(0, 0, 0, 0.5)",
+  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.55)",
   fontSize: "12px",
-  color: "#f5f5f5",
+  color: "#f3f4f6",
 };
 
 export const axisTick = {
-  fill: "#6b7280",
+  fill: "#9ca3af",
   fontSize: 11,
 };
 
-export const gridStroke = "rgba(255, 255, 255, 0.04)";
+export const axisLine = {
+  stroke: "rgba(255, 255, 255, 0.12)",
+};
+
+export const gridStroke = "rgba(255, 255, 255, 0.1)";
+
+export const chartMargins = {
+  line: { top: 16, right: 20, left: 8, bottom: 12 },
+  area: { top: 16, right: 20, left: 12, bottom: 12 },
+  barVertical: { top: 12, right: 24, left: 12, bottom: 12 },
+  barHorizontal: { top: 16, right: 20, left: 8, bottom: 64 },
+  pie: { top: 12, right: 12, bottom: 36, left: 12 },
+};
+
+export const legendStyle = {
+  wrapperStyle: {
+    paddingTop: "12px",
+    color: "#9ca3af",
+    fontSize: "12px",
+  },
+};
