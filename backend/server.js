@@ -1,11 +1,13 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+// Load .env before db module reads process.env (local dev)
+dotenv.config({ path: path.join(__dirname, ".env") });
+
 const db = require("./config/db");
 const analyticsRoutes = require("./routes/analyticsRoutes");
-
-dotenv.config();
 
 const app = express();
 

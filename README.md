@@ -80,7 +80,7 @@ Users ──┬── Subscriptions ── Plans
 | `WatchHistory` | Viewing sessions (`watch_duration`, `watch_time`) |
 | `UserLogs` | Activity logs (`action`, `log_time`) |
 
-**Files:** `database/schema.sql` · `database/sample_data.sql` · `analytics/queries.sql`
+**Files:** `database/schema.sql` · `database/sample_data.sql` · `database/analytics_queries.sql` · `database/README_DATABASE.md`
 
 ---
 
@@ -150,10 +150,14 @@ subscription-analytics-system/
 │   ├── routes/
 │   └── .env.example
 ├── database/
+│   ├── reset.sql
 │   ├── schema.sql
-│   └── sample_data.sql
+│   ├── indexes.sql
+│   ├── sample_data.sql
+│   ├── analytics_queries.sql
+│   └── README_DATABASE.md
 ├── analytics/
-│   └── queries.sql
+│   └── queries.sql          # → see database/analytics_queries.sql
 ├── docs/screenshots/
 ├── DEPLOYMENT.md
 ├── render.yaml
@@ -174,7 +178,9 @@ subscription-analytics-system/
 
 ```bash
 mysql -u root -p -e "CREATE DATABASE subscription_analytics_system;"
+mysql -u root -p subscription_analytics_system < database/reset.sql
 mysql -u root -p subscription_analytics_system < database/schema.sql
+mysql -u root -p subscription_analytics_system < database/indexes.sql
 mysql -u root -p subscription_analytics_system < database/sample_data.sql
 ```
 

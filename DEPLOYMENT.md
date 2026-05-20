@@ -34,13 +34,17 @@ Production stack: **Vercel** (frontend) · **Render** (backend) · **Railway** (
 **Option A — Railway CLI / MySQL client**
 
 ```bash
+mysql -h <DB_HOST> -P <DB_PORT> -u <DB_USER> -p <DB_NAME> < database/reset.sql
 mysql -h <DB_HOST> -P <DB_PORT> -u <DB_USER> -p <DB_NAME> < database/schema.sql
+mysql -h <DB_HOST> -P <DB_PORT> -u <DB_USER> -p <DB_NAME> < database/indexes.sql
 mysql -h <DB_HOST> -P <DB_PORT> -u <DB_USER> -p <DB_NAME> < database/sample_data.sql
 ```
 
 **Option B — Railway Query tab**
 
-Paste and run `database/schema.sql`, then `database/sample_data.sql`.
+Paste and run in order: `reset.sql` → `schema.sql` → `indexes.sql` → `sample_data.sql`.
+
+> **Aiven / Railway:** `sample_data.sql` uses recursive CTEs (not `information_schema`) so all 1000 users and 5000 log rows import reliably.
 
 ### Production notes
 
